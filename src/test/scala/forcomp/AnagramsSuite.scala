@@ -1,6 +1,7 @@
 package forcomp
 
 class AnagramsSuite extends munit.FunSuite:
+
   import Anagrams.*
 
   test("wordOccurrences: abcd (3pts)") {
@@ -16,11 +17,15 @@ class AnagramsSuite extends munit.FunSuite:
   }
 
   test("sentenceOccurrences: HELLO WORLD (5pts)") {
-    assertEquals(sentenceOccurrences(List("HELLO", "WORLD")), List(('d',1), ('e',1), ('h',1), ('l',3), ('o',2), ('r',1), ('w',1)))
+    assertEquals(sentenceOccurrences(List("HELLO", "WORLD")), List(('d', 1), ('e', 1), ('h', 1), ('l', 3), ('o', 2), ('r', 1), ('w', 1)))
   }
 
   test("dictionaryByOccurrences.get: eat (10pts)") {
     assertEquals(dictionaryByOccurrences.get(List(('a', 1), ('e', 1), ('t', 1))).map(_.toSet), Some(Set("ate", "eat", "tea")))
+  }
+
+  test("dictionaryByOccurrences.get: eat (10pts)") {
+    assertEquals(dictionaryByOccurrences.get(List(('a', 1), ('c', 1), ('e', 1), ('r', 1))).map(_.toSet), Some(Set("acre", "care", "race")))
   }
 
 
@@ -31,7 +36,6 @@ class AnagramsSuite extends munit.FunSuite:
   test("wordAnagrams player (2pts)") {
     assertEquals(wordAnagrams("player").toSet, Set("parley", "pearly", "player", "replay"))
   }
-
 
 
   test("subtract: lard - r (10pts)") {
@@ -97,4 +101,5 @@ class AnagramsSuite extends munit.FunSuite:
 
 
   import scala.concurrent.duration.*
+
   override val munitTimeout = 10.seconds
