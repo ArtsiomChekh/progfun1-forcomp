@@ -11,11 +11,13 @@ class AnagramsSuite extends munit.FunSuite:
     assertEquals(wordOccurrences("Robert"), List(('b', 1), ('e', 1), ('o', 1), ('r', 2), ('t', 1)))
   }
 
-
   test("sentenceOccurrences: abcd e (5pts)") {
     assertEquals(sentenceOccurrences(List("abcd", "e")), List(('a', 1), ('b', 1), ('c', 1), ('d', 1), ('e', 1)))
   }
 
+  test("sentenceOccurrences: HELLO WORLD (5pts)") {
+    assertEquals(sentenceOccurrences(List("HELLO", "WORLD")), List(('d',1), ('e',1), ('h',1), ('l',3), ('o',2), ('r',1), ('w',1)))
+  }
 
   test("dictionaryByOccurrences.get: eat (10pts)") {
     assertEquals(dictionaryByOccurrences.get(List(('a', 1), ('e', 1), ('t', 1))).map(_.toSet), Some(Set("ate", "eat", "tea")))
