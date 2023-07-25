@@ -104,7 +104,13 @@ object Anagrams extends AnagramsInterface:
    * Note: the resulting value is an occurrence - meaning it is sorted
    * and has no zero-entries.
    */
-  def subtract(x: Occurrences, y: Occurrences): Occurrences = ???
+  def subtract(x: Occurrences, y: Occurrences): Occurrences =
+    y.foldLeft(Map.empty[Char, Int] ++ x) ((map, tuple) => {
+      val (char, occ) = tuple
+      val newOcc = map(char) - occ
+      if (newOcc != 0) map.updated(char, newOcc)
+      else map - char
+    }).toList
 
   /** Returns a list of all anagram sentences of the given sentence.
    *
