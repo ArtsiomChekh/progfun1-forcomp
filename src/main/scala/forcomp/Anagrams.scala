@@ -91,8 +91,8 @@ object Anagrams extends AnagramsInterface:
     List() :: (for {
       (char, max) <- occurrences
       count <- 1 to max
-      remained <- combinations(occurrences filter ((c, _) => c > char))
-    } yield List((char, count)) ++ remained)
+      combinationsRemaining <- combinations(occurrences filter ((c, _) => c > char))
+    } yield List((char, count)) ++ combinationsRemaining)
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
@@ -105,7 +105,7 @@ object Anagrams extends AnagramsInterface:
    * and has no zero-entries.
    */
   def subtract(x: Occurrences, y: Occurrences): Occurrences =
-    y.foldLeft(Map.empty[Char, Int] ++ x) ((map, tuple) => {
+    y.foldLeft(Map.empty[Char, Int] ++ x)((map, tuple) => {
       val (char, occ) = tuple
       val newOcc = map(char) - occ
       if (newOcc != 0) map.updated(char, newOcc)
