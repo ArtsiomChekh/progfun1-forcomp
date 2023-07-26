@@ -92,7 +92,7 @@ object Anagrams extends AnagramsInterface:
       (char, max) <- occurrences
       count <- 1 to max
       combinationsRemaining <- combinations(occurrences filter ((c, _) => c > char))
-    } yield List((char, count)) ++ combinationsRemaining)
+    } yield List((char, count)) ::: combinationsRemaining)
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
