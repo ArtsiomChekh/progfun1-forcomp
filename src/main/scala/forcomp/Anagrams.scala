@@ -88,20 +88,18 @@ object Anagrams extends AnagramsInterface:
    * Note that the order of the occurrence list subsets does not matter -- the subsets
    * in the example above could have been displayed in some other order.
    */
-  def combinations(occurrences: Occurrences): List[Occurrences] = {
+  def combinations(occurrences: Occurrences): List[Occurrences] =
     @tailrec
-    def loop(occurrences: Occurrences, acc: List[Occurrences]): List[Occurrences] = occurrences match {
+    def loop(occurrences: Occurrences, acc: List[Occurrences]): List[Occurrences] = occurrences match
       case List() => acc.reverse
       case (char, max) :: tail =>
         val newAcc = for {
           count <- 1 to max
           combination <- acc
         } yield (char, count) :: combination
-        loop(tail, acc ::: newAcc.toList )
-    }
+        loop(tail, acc ::: newAcc.toList)
 
     loop(occurrences, List(List()))
-  }
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
