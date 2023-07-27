@@ -50,6 +50,14 @@ class AnagramsSuite extends munit.FunSuite:
     assertEquals(combinations(Nil), List(Nil))
   }
 
+  test("combinations: a (8pts)") {
+    val a = List(('a', 1))
+    val aComb = List(
+      List(('a', 1)),
+        List())
+    assertEquals(combinations(a).toSet, aComb.toSet)
+  }
+
   test("combinations: abba (8pts)") {
     val abba = List(('a', 2), ('b', 2))
     val abbacomb = List(
