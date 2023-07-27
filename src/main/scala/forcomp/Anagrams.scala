@@ -88,18 +88,15 @@ object Anagrams extends AnagramsInterface:
    * Note that the order of the occurrence list subsets does not matter -- the subsets
    * in the example above could have been displayed in some other order.
    */
-  def combinations(occurrences: Occurrences): List[Occurrences] =
-    @tailrec
-    def loop(remainingOccurrences: Occurrences, acc: List[Occurrences]): List[Occurrences] = remainingOccurrences match
-      case List() => acc
-      case (char, max) :: tail =>
-        val newAcc = for {
-          count <- 1 to max
-          combinations <- acc
-        } yield (char, count) :: combinations
-        loop(tail, acc ++ newAcc.toList)
+  def combinations(occurrences: Occurrences): List[Occurrences] = occurrences match
+    case Nil => List(List())
+    case x :: xs =>
+      val newCombination = for (
+        restCombinations <- combinations(xs);
+        count <- 1 to x._2
+      ) yield (x._1, count) :: restCombinations
+      newCombination ++ combinations(xs)
 
-    loop(occurrences, List(List()))
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
@@ -112,12 +109,12 @@ object Anagrams extends AnagramsInterface:
    * and has no zero-entries.
    */
   def subtract(x: Occurrences, y: Occurrences): Occurrences =
-    y.foldLeft(Map.empty[Char, Int] ++ x)((map, tuple) => {
-      val (char, occ) = tuple
-      val newOcc = map(char) - occ
-      if (newOcc != 0) map.updated(char, newOcc)
-      else map - char
-    }).toList
+    y.foldLeft(x.toMap) { case (acc, (char, count)) =>
+      val currentCount = acc.apply(char)
+      if currentCount == count then acc - char
+      else acc updated(char, currentCount - count)
+    }.toList.sorted
+
 
   /** Returns a list of all anagram sentences of the given sentence.
    *

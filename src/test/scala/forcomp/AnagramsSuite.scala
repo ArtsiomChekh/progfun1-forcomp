@@ -45,6 +45,12 @@ class AnagramsSuite extends munit.FunSuite:
     assertEquals(subtract(lard, r), lad)
   }
 
+  test("subtract: lard - a (10pts)") {
+    val a1 = List(('a', 1))
+    val a_1 = List(('a', 1))
+    val empty = List()
+    assertEquals(subtract(a1, a_1), empty)
+  }
 
   test("combinations: [] (8pts)") {
     assertEquals(combinations(Nil), List(Nil))
@@ -54,22 +60,22 @@ class AnagramsSuite extends munit.FunSuite:
     val a = List(('a', 1))
     val aComb = List(
       List(('a', 1)),
-        List())
+      List())
     assertEquals(combinations(a).toSet, aComb.toSet)
   }
 
   test("combinations: abba (8pts)") {
     val abba = List(('a', 2), ('b', 2))
     val abbacomb = List(
-      List(('a', 1)),
-      List(('b', 2), ('a', 2)),
+      List(('a',1)),
+      List(('a',1), ('b',1)),
+      List(('a',2), ('b',2)),
       List(),
-      List(('b', 2), ('a', 1)),
-      List(('b', 1), ('a', 1)),
-      List(('a', 2)),
-      List(('b', 1), ('a', 2)),
-      List(('b', 1)),
-      List(('b', 2)))
+      List(('b',1)),
+      List(('b',2)),
+      List(('a',1), ('b',2)),
+      List(('a',2)),
+      List(('a',2), ('b',1)))
     assertEquals(combinations(abba).toSet, abbacomb.toSet)
   }
 
