@@ -1,6 +1,6 @@
 package forcomp
 
-class AnagramsSuite extends munit.FunSuite:
+class AnagramsSuite extends munit.FunSuite :
 
   import Anagrams.*
 
@@ -17,17 +17,19 @@ class AnagramsSuite extends munit.FunSuite:
   }
 
   test("sentenceOccurrences: HELLO WORLD (5pts)") {
-    assertEquals(sentenceOccurrences(List("HELLO", "WORLD")), List(('d', 1), ('e', 1), ('h', 1), ('l', 3), ('o', 2), ('r', 1), ('w', 1)))
+    assertEquals(sentenceOccurrences(List("HELLO", "WORLD")),
+      List(('d', 1), ('e', 1), ('h', 1), ('l', 3), ('o', 2), ('r', 1), ('w', 1)))
   }
 
   test("dictionaryByOccurrences.get: eat (10pts)") {
-    assertEquals(dictionaryByOccurrences.get(List(('a', 1), ('e', 1), ('t', 1))).map(_.toSet), Some(Set("ate", "eat", "tea")))
+    assertEquals(dictionaryByOccurrences.get(List(('a', 1), ('e', 1), ('t', 1))).map(_.toSet),
+      Some(Set("ate", "eat", "tea")))
   }
 
   test("dictionaryByOccurrences.get: eat (10pts)") {
-    assertEquals(dictionaryByOccurrences.get(List(('a', 1), ('c', 1), ('e', 1), ('r', 1))).map(_.toSet), Some(Set("acre", "care", "race")))
+    assertEquals(dictionaryByOccurrences.get(List(('a', 1), ('c', 1), ('e', 1), ('r', 1))).map(_.toSet),
+      Some(Set("acre", "care", "race")))
   }
-
 
   test("wordAnagrams married (2pts)") {
     assertEquals(wordAnagrams("married").toSet, Set("married", "admirer"))
@@ -36,7 +38,6 @@ class AnagramsSuite extends munit.FunSuite:
   test("wordAnagrams player (2pts)") {
     assertEquals(wordAnagrams("player").toSet, Set("parley", "pearly", "player", "replay"))
   }
-
 
   test("subtract: lard - r (10pts)") {
     val lard = List(('a', 1), ('d', 1), ('l', 1), ('r', 1))
@@ -67,18 +68,17 @@ class AnagramsSuite extends munit.FunSuite:
   test("combinations: abba (8pts)") {
     val abba = List(('a', 2), ('b', 2))
     val abbacomb = List(
-      List(('a',1)),
-      List(('a',1), ('b',1)),
-      List(('a',2), ('b',2)),
+      List(('a', 1)),
+      List(('a', 1), ('b', 1)),
+      List(('a', 2), ('b', 2)),
       List(),
-      List(('b',1)),
-      List(('b',2)),
-      List(('a',1), ('b',2)),
-      List(('a',2)),
-      List(('a',2), ('b',1)))
+      List(('b', 1)),
+      List(('b', 2)),
+      List(('a', 1), ('b', 2)),
+      List(('a', 2)),
+      List(('a', 2), ('b', 1)))
     assertEquals(combinations(abba).toSet, abbacomb.toSet)
   }
-
 
   test("sentence anagrams: [] (10pts)") {
     val sentence = List()
@@ -107,11 +107,9 @@ class AnagramsSuite extends munit.FunSuite:
       List("Uzi", "Rex", "null"),
       List("Zulu", "nil", "Rex"),
       List("rulez", "Linux"),
-      List("Linux", "rulez")
-    )
+      List("Linux", "rulez"))
     assertEquals(sentenceAnagrams(sentence).toSet, anas.toSet)
   }
-
 
   import scala.concurrent.duration.*
 

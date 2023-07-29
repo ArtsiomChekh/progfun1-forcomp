@@ -3,7 +3,7 @@ package forcomp
 import scala.annotation.tailrec
 import scala.io.{Codec, Source}
 
-object Anagrams extends AnagramsInterface:
+object Anagrams extends AnagramsInterface :
 
   /** A word is simply a `String`. */
   type Word = String
@@ -60,8 +60,7 @@ object Anagrams extends AnagramsInterface:
    */
   lazy val dictionaryByOccurrences: Map[Occurrences, List[Word]] =
     dictionary.groupBy(o => wordOccurrences(o))
-
-
+  
   /** Returns all the anagrams of a given word. */
   def wordAnagrams(word: Word): List[Word] =
     dictionaryByOccurrences.getOrElse(wordOccurrences(word), List())
@@ -89,17 +88,11 @@ object Anagrams extends AnagramsInterface:
    * in the example above could have been displayed in some other order.
    */
   def combinations(occurrences: Occurrences): List[Occurrences] =
-    @tailrec
-    def loop(restOccurrences: Occurrences, acc: List[Occurrences]): List[Occurrences] = restOccurrences match
-      case Nil => acc
-      case (char, count) :: xs =>
-        val newCombination = for {
-          restCombinations <- acc
-          n <- 1 to count
-        } yield (char, n) :: restCombinations
-        loop(xs, acc ::: newCombination)
-    loop(occurrences, List(List()))
-
+    List() :: (for {
+      (char, max) <- occurrences
+      count <- 1 to max
+      combinationsRemaining <- combinations(occurrences filter ((c, _) => c > char))
+    } yield List((char, count)) ::: combinationsRemaining)
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
@@ -117,7 +110,6 @@ object Anagrams extends AnagramsInterface:
       if currentCount == count then acc - char
       else acc updated(char, currentCount - count)
     }.toList.sorted
-
 
   /** Returns a list of all anagram sentences of the given sentence.
    *
@@ -171,7 +163,6 @@ object Anagrams extends AnagramsInterface:
         sentences.flatten
 
     loop(sentenceOccurrences(sentence), List(List()))
-
 
 object Dictionary:
   def loadDictionary: List[String] =
