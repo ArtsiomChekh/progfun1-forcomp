@@ -1,6 +1,6 @@
 package forcomp
 
-class AnagramsSuite extends munit.FunSuite :
+class AnagramsSuite extends munit.FunSuite:
 
   import Anagrams.*
 
