@@ -3,7 +3,7 @@ package forcomp
 import scala.annotation.tailrec
 import scala.io.{Codec, Source}
 
-object Anagrams extends AnagramsInterface :
+object Anagrams extends AnagramsInterface:
 
   /** A word is simply a `String`. */
   type Word = String
@@ -60,7 +60,7 @@ object Anagrams extends AnagramsInterface :
    */
   lazy val dictionaryByOccurrences: Map[Occurrences, List[Word]] =
     dictionary.groupBy(wordOccurrences)
-  
+
   /** Returns all the anagrams of a given word. */
   def wordAnagrams(word: Word): List[Word] =
     dictionaryByOccurrences(wordOccurrences(word))
@@ -87,12 +87,22 @@ object Anagrams extends AnagramsInterface :
    * Note that the order of the occurrence list subsets does not matter -- the subsets
    * in the example above could have been displayed in some other order.
    */
-  def combinations(occurrences: Occurrences): List[Occurrences] =
-    List() :: (for {
-      (char, max) <- occurrences
-      count <- 1 to max
-      combinationsRemaining <- combinations(occurrences filter ((c, _) => c > char))
-    } yield List((char, count)) ::: combinationsRemaining)
+  //  def combinations(occurrences: Occurrences): List[Occurrences] =
+  //    List() :: (for {
+  //      (char, max) <- occurrences
+  //      count <- 1 to max
+  //      combinationsRemaining <- combinations(occurrences filter ((c, _) => c > char))
+  //    } yield List((char, count)) ::: combinationsRemaining)
+
+  def combinations(occurrences: Occurrences): List[Occurrences] = occurrences match
+    case Nil => List(List())
+    case x :: xs =>
+      val listOccurrences = (for {
+        count <- 1 to x._2
+        combinationsRemaining <- combinations(xs)
+      } yield (x._1, count) :: combinationsRemaining).toList
+      listOccurrences ::: combinations(xs)
+
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
