@@ -59,11 +59,11 @@ object Anagrams extends AnagramsInterface :
    *
    */
   lazy val dictionaryByOccurrences: Map[Occurrences, List[Word]] =
-    dictionary.groupBy(o => wordOccurrences(o))
+    dictionary.groupBy(wordOccurrences)
   
   /** Returns all the anagrams of a given word. */
   def wordAnagrams(word: Word): List[Word] =
-    dictionaryByOccurrences.getOrElse(wordOccurrences(word), List())
+    dictionaryByOccurrences(wordOccurrences(word))
 
   /** Returns the list of all subsets of the occurrence list.
    * This includes the occurrence itself, i.e. `List(('k', 1), ('o', 1))`
