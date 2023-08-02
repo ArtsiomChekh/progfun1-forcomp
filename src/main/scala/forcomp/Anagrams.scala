@@ -87,13 +87,6 @@ object Anagrams extends AnagramsInterface:
    * Note that the order of the occurrence list subsets does not matter -- the subsets
    * in the example above could have been displayed in some other order.
    */
-  //  def combinations(occurrences: Occurrences): List[Occurrences] =
-  //    List() :: (for {
-  //      (char, max) <- occurrences
-  //      count <- 1 to max
-  //      combinationsRemaining <- combinations(occurrences filter ((c, _) => c > char))
-  //    } yield List((char, count)) ::: combinationsRemaining)
-
   def combinations(occurrences: Occurrences): List[Occurrences] = occurrences match
     case Nil => List(List())
     case x :: xs =>
@@ -102,7 +95,6 @@ object Anagrams extends AnagramsInterface:
         combinationsRemaining <- combinations(xs)
       } yield (x._1, count) :: combinationsRemaining).toList
       listOccurrences ::: combinations(xs)
-
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
