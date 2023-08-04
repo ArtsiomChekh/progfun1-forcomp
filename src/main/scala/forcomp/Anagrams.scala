@@ -88,17 +88,15 @@ object Anagrams extends AnagramsInterface:
    * in the example above could have been displayed in some other order.
    */
   def combinations(occurrences: Occurrences): List[Occurrences] =
-    @tailrec
-    def loop(remainingOccurrences: Occurrences, acc: List[Occurrences]): List[Occurrences] = remainingOccurrences match
-      case Nil => acc
-      case (c, count) :: xs =>
-        val listOccurrences = (for {
-          comb <- acc
-          i <- 1 to count
-        } yield (c, i) :: comb)
-        loop(xs,listOccurrences ::: acc)
-
-    loop(occurrences, List(List()))
+    occurrences.foldLeft(List(List()): List[Occurrences]):
+      case (acc, (c, count)) =>
+        val listOccurrences =
+          for
+            comb <- acc
+            i <- 1 to count
+          yield
+            comb ::: List((c, i))
+        listOccurrences ::: acc
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
