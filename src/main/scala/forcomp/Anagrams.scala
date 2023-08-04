@@ -87,14 +87,31 @@ object Anagrams extends AnagramsInterface:
    * Note that the order of the occurrence list subsets does not matter -- the subsets
    * in the example above could have been displayed in some other order.
    */
-  def combinations(occurrences: Occurrences): List[Occurrences] = occurrences match
-    case Nil => List(List())
-    case x :: xs =>
-      val listOccurrences = (for {
-        count <- 1 to x._2
-        combinationsRemaining <- combinations(xs)
-      } yield (x._1, count) :: combinationsRemaining).toList
-      listOccurrences ::: combinations(xs)
+  //  def combinations(occurrences: Occurrences): List[Occurrences] = occurrences match
+  //    case Nil => List(List())
+  //    case x :: xs =>
+  //      val listOccurrences = (for {
+  //        count <- 1 to x._2
+  //        combinationsRemaining <- combinations(xs)
+  //      } yield (x._1, count) :: combinationsRemaining).toList
+  //      listOccurrences ::: combinations(xs)
+  def combinations(occurrences: Occurrences): List[Occurrences] =
+    @tailrec
+    def loop(remainingOccurrences: Occurrences, acc: List[Occurrences]): List[Occurrences] = remainingOccurrences match
+      case Nil => acc
+      case (c, count) :: xs =>
+        val listOccurrences = (for {
+          comb <- acc
+          i <- 1 to count
+        } yield (c, i) :: comb)
+        loop(xs,listOccurrences ::: acc)
+
+    loop(occurrences, List(List()))
+
+  def occ(c: (Char, Int)): List[(Char, Int)] =
+    (for (
+      i <- 1 to c._2)
+    yield (c._1, i)).toList
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
