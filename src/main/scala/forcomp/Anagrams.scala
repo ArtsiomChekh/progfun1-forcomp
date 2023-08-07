@@ -89,14 +89,14 @@ object Anagrams extends AnagramsInterface:
    */
   def combinations(occurrences: Occurrences): List[Occurrences] =
     occurrences.foldLeft(List(List()): List[Occurrences]):
-      case (acc, (c, count)) =>
-        val listOccurrences =
+      case (acc, (char, count)) =>
+        val combs =
           for
             comb <- acc
             i <- 1 to count
           yield
-            comb ::: List((c, i))
-        listOccurrences ::: acc
+            comb ::: List((char, i))
+        combs ::: acc
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
